@@ -6,6 +6,7 @@ class Game
   
   def initialize()
     @board = Board.new.populate
+    @previous_guess = nil
   end
   
   def make_guess
@@ -15,14 +16,36 @@ class Game
       puts "Enter try again"
       pos = gets.chomp.split(",")
     end
-
-    pos
-
+    #@previous_guess = pos.map(&:to_i)
+    pos.map(&:to_i)
   end
 
   def run
-    # @board.
+    puts "Welcome to guessing game!"
+    unless @board.won?
+      @board.render
+      pos = make_guess
+       @board.reveal(pos) #card is flipped up!
+
+    end
+    
   end
+
+  def match_or_not(pos)
+    if @previous_guess
+      if @previous_guess == @board[pos]
+        #keep both cards up
+
+      else
+        #flip both card face down
+        .hide(pos)
+      end
+      end
+    else
+      @previous_guess = @board[pos]
+    end
+  end
+
 
 
 end

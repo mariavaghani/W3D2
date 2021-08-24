@@ -8,6 +8,15 @@ class Board
 
 #def board_empty?
 #end
+  def [](pos)
+    row,col = pos
+    @grid[row][col]
+  end
+
+  # def []=(pos, value)
+  #   row,col = pos
+  #   @grid[row][col].face_value = value
+  # end
 
   def populate
     pairs_left_to_place_hash = {}
@@ -43,7 +52,14 @@ class Board
     row, col = guessed_pos
     if @grid[row][col].face_down 
       @grid[row][col].reveal
+      return @grid[row][col].face_value
     end
+  end
+
+  def hide(pos)
+    # row, col = pos
+    # @grid[row][col].face_value = 
+    self[pos].hide
   end
 
   def won?
