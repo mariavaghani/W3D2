@@ -5,7 +5,8 @@ class Game
 
   
   def initialize()
-    @board = Board.new.populate
+    @board = Board.new
+
     @previous_guess = nil
   end
   
@@ -21,11 +22,15 @@ class Game
   end
 
   def run
+    @board.populate
     puts "Welcome to guessing game!"
-    unless @board.won?
+    until @board.won?
+      system("clear")
+      sleep(1)
       @board.render
       pos = make_guess
-       @board.reveal(pos) #card is flipped up!
+      match_or_not(pos) if @board.reveal(pos) #card is flipped up!
+        
 
     end
     
@@ -33,13 +38,14 @@ class Game
 
   def match_or_not(pos)
     if @previous_guess
-      if @previous_guess == @board[pos]
-        #keep both cards up
-
-      else
+      unless @previous_guess == @board[pos]
+        
         #flip both card face down
-        .hide(pos)
-      end
+        @previous_guess.hide
+        @board[pos].hide
+        @previous_guess = nil
+      else
+        @previous_guess = nil
       end
     else
       @previous_guess = @board[pos]
@@ -55,5 +61,5 @@ if __FILE__ == $PROGRAM_NAME
 
 
   game = Game.new
-  p game.make_guess
+  game.run
 end

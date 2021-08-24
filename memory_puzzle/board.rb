@@ -54,11 +54,12 @@ class Board
       @grid[row][col].reveal
       return @grid[row][col].face_value
     end
+    false
   end
 
   def hide(pos)
     # row, col = pos
-    # @grid[row][col].face_value = 
+    # @grid[row][col].hide
     self[pos].hide
   end
 
