@@ -45,10 +45,16 @@ class Board
       @grid[row][col].reveal
     end
   end
+
+  def won?
+    @grid.flatten.all? { |ele| ele.face_down == false }
+  end
+
 end
 
 if __FILE__ == $PROGRAM_NAME
   board = Board.new
   board.populate
   board.render
+  p board.won?
 end
