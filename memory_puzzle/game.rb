@@ -21,25 +21,29 @@ class Game
     pos.map(&:to_i)
   end
 
+  def render_board
+    system("clear")
+    @board.render
+    sleep(1)
+    
+  end
+
   def run
     @board.populate
     puts "Welcome to guessing game!"
     until @board.won?
-      system("clear")
-      sleep(1)
-      @board.render
+      render_board
       pos = make_guess
-      match_or_not(pos) if @board.reveal(pos) #card is flipped up!
-        
-
+      match_or_not(pos) if @board.reveal(pos) #card is flipped up!    
     end
-    
+    puts "You won!!"
   end
 
   def match_or_not(pos)
+    render_board
     if @previous_guess
       unless @previous_guess == @board[pos]
-        
+
         #flip both card face down
         @previous_guess.hide
         @board[pos].hide

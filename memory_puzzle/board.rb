@@ -36,7 +36,8 @@ class Board
   end
 
   def render
-    @grid.each do |sub_arr| 
+    puts "  0 1 2 3"
+    @grid.each.with_index do |sub_arr,i| 
       row_state = sub_arr.map do |ele|
         if ele.face_down
           " "
@@ -44,7 +45,7 @@ class Board
           ele.face_value
         end
       end
-      puts row_state.join(" ")
+      puts "#{i} #{row_state.join(" ")}"
     end
   end
 
