@@ -1,25 +1,18 @@
 require_relative "board"
+require_relative "human_player"
 
 class Game
   NUMS = "0123"
 
   
-  def initialize()
+  def initialize(player)
     @board = Board.new
-
+    @board.populate
+    @player = player
     @previous_guess = nil
   end
   
-  def make_guess
-    puts "Enter the position"
-    pos = gets.chomp.split(",")
-    unless pos.all? { |str| NUMS.include?(str) }
-      puts "Enter try again"
-      pos = gets.chomp.split(",")
-    end
-    #@previous_guess = pos.map(&:to_i)
-    pos.map(&:to_i)
-  end
+ 
 
   def render_board
     system("clear")
@@ -33,7 +26,7 @@ class Game
     puts "Welcome to guessing game!"
     until @board.won?
       render_board
-      pos = make_guess
+      pos = @player.prompt
       match_or_not(pos) if @board.reveal(pos) #card is flipped up!    
     end
     puts "You won!!"
@@ -63,7 +56,7 @@ end
 
 if __FILE__ == $PROGRAM_NAME
 
-
-  game = Game.new
+  player = HumanPlayer.new
+  game = Game.new(player)
   game.run
 end
